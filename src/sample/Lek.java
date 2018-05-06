@@ -2,17 +2,12 @@ package sample;/**
  * Created by david on 21/04/2018.
  */
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-public class Lek extends Application {
+public class Lek {
 
     public static void main(String[] args) {
-        launch(args);
+        new Mechanics.Shop("ActiveShop");
     }
 
-    @Override
-    public void start(Stage primaryStage) {
 
     }
-}
+

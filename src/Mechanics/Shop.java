@@ -3,7 +3,7 @@ package Mechanics;
 import Mechanics.json.JSONUtils;
 import javafx.beans.NamedArg;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.layout.Pane;
+import javafx.beans.property.StringProperty;
 import javafx.scene.layout.VBox;
 import org.json.JSONObject;
 
@@ -11,15 +11,16 @@ import org.json.JSONObject;
  * Created by david on 20/04/2018.
  */
 public class Shop extends VBox {
+    private final StringProperty shopname;
     private Item[] items;
-    private final SimpleStringProperty shopname;
 
     //Behöver använda @namedarg för att kunna skapa shops i FXML
     //Med de labels som vi har så kan vi nu skapa instanser av shop som tar vilken av parametrarna från shop som ska
     //Användas
-    public Shop(@NamedArg("shopName") String shopname) {
+
+    public Shop(@NamedArg("ShopID") String shopname) {
         super();
-        this.shopname = new SimpleStringProperty(this, "shopName", shopname);
+        this.shopname = new SimpleStringProperty(this, "shopID", shopname);
 
         JSONObject obj = JSONUtils.getJSONObjectFromFile("/Mechanics/resources/Shop.json");
         JSONObject a;
@@ -30,6 +31,7 @@ public class Shop extends VBox {
             items[j] = new Item(a.getInt("c0"), a.getString("name"), "resources/Images/" + a.getString("filename"), a.getDouble("multiplier"));
         }
         this.getChildren().addAll(items);
+        return;
     }
 
     public void update() {
@@ -38,17 +40,17 @@ public class Shop extends VBox {
         }
     }
 
-    public void add(VBox b) {
-        b.getChildren().addAll(items);
-    }
-
-    public Pane[] getContent() {
-        return items;
-    }
-
-    public Item[] getItems() {
-        return items;
-    }
+//    public void add(VBox b) {
+//        b.getChildren().addAll(items);
+//    }
+//
+//    public Pane[] getContent() {
+//        return items;
+//    }
+//
+//    public Item[] getItems() {
+//        return items;
+//    }
 
 //    public String getFilename() {
 //        return filename;

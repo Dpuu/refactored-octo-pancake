@@ -7,11 +7,9 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -21,6 +19,9 @@ import static Mechanics.Bratt.addPace;
 
 
 public class Controller {
+    private static final double y0 = 500;
+    @FXML
+    Pane rot;
     @FXML
     private Label balance;
     @FXML
@@ -28,19 +29,8 @@ public class Controller {
     @FXML
     private Label income;
     @FXML
-    private ScrollPane clickBox;
-    @FXML
-    VBox passiveBox;
-    @FXML
-    VBox multiplierBox;
-    @FXML
-    Pane rot;
-    @FXML
     private Shop activeShop;
-
-
     private Timeline timeline;
-    private static final double y0 = 500;
 
     public Controller() throws URISyntaxException {
         updateLabels();
@@ -82,7 +72,7 @@ public class Controller {
             timeline.setOnFinished((ActionEvent e) -> rot.getChildren().remove(temp));
             timeline.play();
         } catch (Exception e) { //Should never happen
-            System.out.println("ImageLoadingError");
+            e.printStackTrace();
         }
         Bratt.click(); //Game mechanic related
         double bFactor = Bratt.getbFactor(); //Got to store it to prevent negative values if you're buying a lot while pace >= 1
@@ -95,19 +85,15 @@ public class Controller {
 
     @FXML
     public void updateLabels() {
-//        System.out.println(clickBox);
-//        clickBox.
-//        clickBox.setContent(shop);
         Timeline labels = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             balance.setText(String.format("%.1f", Bratt.getBratts()));
             income.setText(String.format("%.2f/s", Bratt.getIncome()));
             multiplier.setText(String.format("x%.3f", Bratt.getMultiplier()));
-            updateShops();
+//            updateShops();
             Bratt.manageMultiplier();
         }));
         labels.setCycleCount(Timeline.INDEFINITE);
         labels.play();
-        System.out.println(clickBox);
     }
 
     private void updateShops() {
